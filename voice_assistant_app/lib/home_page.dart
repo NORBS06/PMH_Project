@@ -1,19 +1,15 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 
-
-class HomePage extends StatefulWidget{
-  const HomePage({Super.key});
+class HomePage extends StatefulWidget {
+  const HomePage({Key? key}) : super(key: key);
 
   @override
-  State<HomePage> createState() => _HomePage();
-
+  _HomePageState createState() => _HomePageState();
 }
 
-Class _HomePageState extends State<Homepage> {
-@override
-Widget build(BuildContext context){
-  return Scaffold();
-}
+class _HomePageState extends State<HomePage> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold();
+  }
 }
