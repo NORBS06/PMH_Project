@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kai_app/openai_service.dart';
 import 'package:speech_to_text/speech_recognition_result.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 
@@ -24,7 +25,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   /// Each time to start a speech recognition session
-  void startListening() async {
+  Future<void> startListening() async {
     await speechToText.listen(onResult: onSpeechResult);
     setState(() {});
   }
@@ -33,7 +34,7 @@ class _HomePageState extends State<HomePage> {
   /// Note that there are also timeouts that each platform enforces
   /// and the SpeechToText plugin supports setting timeouts on the
   /// listen method.
-  void stopListening() async {
+  Future<void> stopListening() async {
     await speechToText.stop();
     setState(() {});
   }
@@ -76,7 +77,7 @@ class _HomePageState extends State<HomePage> {
                   speechToText.isNotListening) {
                 await startListening();
               } else if (speechToText.isListening) {
-                final speech = await openAIService.isArtPromptAPI(lastWords);
+                final speech = await OpenAIService.chatGPTAPI(lastWords);
                 if (speech.contains('https')) {
                   generatedImageUrl = speech;
                   generatedContent = null;
