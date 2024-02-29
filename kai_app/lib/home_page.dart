@@ -14,6 +14,8 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final speechToText = SpeechToText();
   final flutterTts = FlutterTts();
+  String? generatedContent;
+  String displayText = 'jhbvzxjkbvzscj';
 
   String lastWords = '';
   final OpenAIService openAIService = OpenAIService();
@@ -94,7 +96,14 @@ class _HomePageState extends State<HomePage> {
                 await startListening();
               } else if (speechToText.isListening) {
                 final speech = await openAIService.chatGPTAPI(lastWords);
-                await systemSpeak(speech);
+                if (speech.contains('https')) {
+                  generatedContent = null;
+                  setState(() {});
+                } else {
+                  generatedContent = speech;
+                  setState(() {});
+                  await systemSpeak(speech);
+                }
                 await stopListening();
               } else {
                 initSpeechToText();
@@ -119,6 +128,14 @@ class _HomePageState extends State<HomePage> {
             elevation: 0,
             highlightElevation: 0,
             hoverElevation: 0,
+          ),
+          Column(
+            children: [
+              Text(
+                displayText,
+                style: const TextStyle(fontSize: 24),
+              ),
+            ],
           ),
         ],
       ),
