@@ -15,7 +15,7 @@ class _HomePageState extends State<HomePage> {
   final speechToText = SpeechToText();
   final flutterTts = FlutterTts();
   String? generatedContent;
-  String displayText = 'jhbvzxjkbvzscj';
+  String displayText = ' ';
 
   String lastWords = '';
   final OpenAIService openAIService = OpenAIService();
@@ -42,6 +42,7 @@ class _HomePageState extends State<HomePage> {
   Future<void> startListening() async {
     await speechToText.listen(onResult: onSpeechResult);
     setState(() {});
+    displayText = ' ';
   }
 
   /// Manually stop the active speech recognition session
@@ -101,6 +102,7 @@ class _HomePageState extends State<HomePage> {
                   setState(() {});
                 } else {
                   generatedContent = speech;
+                  displayText = speech;
                   setState(() {});
                   await systemSpeak(speech);
                 }
@@ -129,13 +131,20 @@ class _HomePageState extends State<HomePage> {
             highlightElevation: 0,
             hoverElevation: 0,
           ),
-          Column(
-            children: [
-              Text(
-                displayText,
-                style: const TextStyle(fontSize: 24),
+          SizedBox(
+            width: 300,
+            child: Padding(
+              padding: const EdgeInsets.only(top: 550),
+              child: Column(
+                children: [
+                  Text(
+                    displayText,
+                    style: const TextStyle(fontSize: 18),
+                    textAlign: TextAlign.center,
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
         ],
       ),
