@@ -12,6 +12,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
    final speechToText = SpeechToText();
+   String lastWords = '';
   @override
   void initState(){
     super.initState();
@@ -20,6 +21,35 @@ class _HomePageState extends State<HomePage> {
   Future<void> initSpeechToText() async{
     await speechToText.initialize();
      setState(() {});
+  }
+
+   /// Each time to start a speech recognition session
+  void startListening() async {
+    await speechToText.listen(onResult: onSpeechResult);
+    setState(() {});
+  }
+
+  /// Manually stop the active speech recognition session
+  /// Note that there are also timeouts that each platform enforces
+  /// and the SpeechToText plugin supports setting timeouts on the
+  /// listen method.
+  void stopListening() async {
+    await speechToText.stop();
+    setState(() {});
+  }
+
+  /// This is the callback that the SpeechToText plugin calls when
+  /// the platform returns recognized words.
+  void onSpeechResult(SpeechRecognitionResult result) {
+    setState(() {
+      lastWords = result.recognizedWords;
+    });
+  }
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    speechToText.stop();
   }
   @override
   Widget build(BuildContext context) {
