@@ -8,6 +8,16 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+   final SpeechToText = SpeechToText();
+  @override
+  void initState(){
+    super.initState();
+    initSpeechToText();
+  }
+  Future<Void> initSpeechToText() async{
+    await SpeechToText.initialize();
+    SetState(() {});
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -27,16 +27,6 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-   final SpeechToText = SpeechToText();
-  @override
-  void initState(){
-    super.initState();
-    initSpeechToText();
-  }
-  Future<Void> initSpeechToText() async{
-    await SpeechToText.initialize();
-    setState(() {});
-  }
   const MyHomePage({super.key, required this.title});
 
   // This widget is the home page of your application. It is stateful, meaning
