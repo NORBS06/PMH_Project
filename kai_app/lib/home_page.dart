@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:speech_to_text/speech_recognition_result.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 
-
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
@@ -11,19 +10,20 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-   final speechToText = SpeechToText();
-   String lastWords = '';
+  final speechToText = SpeechToText();
+  String lastWords = '';
   @override
-  void initState(){
+  void initState() {
     super.initState();
     initSpeechToText();
   }
-  Future<void> initSpeechToText() async{
+
+  Future<void> initSpeechToText() async {
     await speechToText.initialize();
-     setState(() {});
+    setState(() {});
   }
 
-   /// Each time to start a speech recognition session
+  /// Each time to start a speech recognition session
   void startListening() async {
     await speechToText.listen(onResult: onSpeechResult);
     setState(() {});
@@ -45,12 +45,14 @@ class _HomePageState extends State<HomePage> {
       lastWords = result.recognizedWords;
     });
   }
+
   @override
   void dispose() {
     // TODO: implement dispose
     super.dispose();
     speechToText.stop();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -69,7 +71,27 @@ class _HomePageState extends State<HomePage> {
           ),
           FloatingActionButton.extended(
             backgroundColor: Colors.transparent,
-            onPressed: () {},
+            onPressed: () async {
+              if (await speechToText.hasPermission &&
+                  speechToText.isNotListening) {
+                await startListening();
+              } else if (speechToText.isListening) {
+                final speech = await openAIService.isArtPromptAPI(lastWords);
+                if (speech.contains('https')) {
+                  generatedImageUrl = speech;
+                  generatedContent = null;
+                  setState(() {});
+                } else {
+                  generatedImageUrl = null;
+                  generatedContent = speech;
+                  setState(() {});
+                  await systemSpeak(speech);
+                }
+                await stopListening();
+              } else {
+                initSpeechToText();
+              }
+            },
             label: ClipRRect(
               borderRadius: BorderRadius.circular(30),
               child: Image.asset(
