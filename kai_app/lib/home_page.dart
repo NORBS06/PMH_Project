@@ -49,7 +49,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
     speechToText.stop();
   }
@@ -76,21 +75,6 @@ class _HomePageState extends State<HomePage> {
               if (await speechToText.hasPermission &&
                   speechToText.isNotListening) {
                 await startListening();
-              } else if (speechToText.isListening) {
-                final speech = await OpenAIService.chatGPTAPI(lastWords);
-                if (speech.contains('https')) {
-                  generatedImageUrl = speech;
-                  generatedContent = null;
-                  setState(() {});
-                } else {
-                  generatedImageUrl = null;
-                  generatedContent = speech;
-                  setState(() {});
-                  await systemSpeak(speech);
-                }
-                await stopListening();
-              } else {
-                initSpeechToText();
               }
             },
             label: ClipRRect(
