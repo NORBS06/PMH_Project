@@ -1,12 +1,16 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:kai_app/home_page.dart';
 import 'package:kai_app/pallete.dart';
+import 'package:speech_to_text/speech_to_text.dart';
 
 void main() {
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  
   const MyApp({super.key});
 
   @override
@@ -23,6 +27,16 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
+   final SpeechToText = SpeechToText();
+  @override
+  void initState(){
+    super.initState();
+    initSpeechToText();
+  }
+  Future<Void> initSpeechToText() async{
+    await SpeechToText.initialize();
+    setState(() {});
+  }
   const MyHomePage({super.key, required this.title});
 
   // This widget is the home page of your application. It is stateful, meaning
