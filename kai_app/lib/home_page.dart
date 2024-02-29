@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:speech_to_text/speech_recognition_result.dart';
+import 'package:speech_to_text/speech_to_text.dart';
+
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -16,7 +19,7 @@ class _HomePageState extends State<HomePage> {
   }
   Future<Void> initSpeechToText() async{
     await SpeechToText.initialize();
-    SetState(() {});
+     setState(() {});
   }
   @override
   Widget build(BuildContext context) {
