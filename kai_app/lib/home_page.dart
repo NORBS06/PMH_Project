@@ -11,13 +11,13 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-   final SpeechToText = SpeechToText();
+   final speechToText = SpeechToText();
   @override
   void initState(){
     super.initState();
     initSpeechToText();
   }
-  Future<Void> initSpeechToText() async{
+  Future<void> initSpeechToText() async{
     await SpeechToText.initialize();
      setState(() {});
   }
