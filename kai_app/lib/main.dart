@@ -1,16 +1,12 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:kai_app/home_page.dart';
 import 'package:kai_app/pallete.dart';
-import 'package:speech_to_text/speech_to_text.dart';
 
 void main() {
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  
   const MyApp({super.key});
 
   @override
