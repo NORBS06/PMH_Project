@@ -18,7 +18,7 @@ class _HomePageState extends State<HomePage> {
     initSpeechToText();
   }
   Future<void> initSpeechToText() async{
-    await SpeechToText.initialize();
+    await speechToText.initialize();
      setState(() {});
   }
   @override
